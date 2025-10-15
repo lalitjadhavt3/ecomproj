@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, StyleSheet, ViewStyle} from 'react-native';
-import {LightColors} from '../../theme/colors';
+import {useTheme} from '../../hooks/useTheme';
 import {Spacing} from '../../theme/spacing';
 import {Shadows} from '../../theme/shadows';
 
@@ -15,22 +15,20 @@ export const Card: React.FC<CardProps> = ({
   style,
   padding = 'md',
 }) => {
+  const {colors} = useTheme();
+  
   return (
     <View
       style={[
-        styles.card,
-        {padding: Spacing[padding]},
+        {
+          backgroundColor: colors.surface,
+          borderRadius: 12,
+          padding: Spacing[padding],
+          ...Shadows.card,
+        },
         style,
       ]}>
       {children}
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  card: {
-    backgroundColor: LightColors.surface,
-    borderRadius: 12,
-    ...Shadows.card,
-  },
-});

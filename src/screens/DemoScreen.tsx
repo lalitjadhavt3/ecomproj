@@ -14,16 +14,15 @@ import {
   Badge,
   ThemeToggle,
 } from '../components';
+import { useTheme } from '../hooks/useTheme';
 import { useResponsive } from '../hooks/useResponsive';
 import { formatCurrency, capitalize } from '../utils/helpers';
 import { wp, hp } from '../utils/responsive';
 import { Spacing } from '../theme';
-import { LightColors } from '../theme/colors';
 
 export const DemoScreen: React.FC = () => {
-  // Use direct colors for now to avoid context issues
-  const Colors = LightColors;
-  const mode = 'light';
+  const {colors, mode} = useTheme();
+  const Colors = colors;
   const screen = useResponsive();
   const [inputValue, setInputValue] = useState('');
   const [inputError, setInputError] = useState('');

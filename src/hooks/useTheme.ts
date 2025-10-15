@@ -1,13 +1,10 @@
 import {useThemeContext} from '../context/ThemeContext';
 
 export const useTheme = () => {
-  const {colors, spacing, typography, shadows, mode, toggleTheme} = useThemeContext();
+  const {colors, mode, toggleTheme} = useThemeContext();
   
   return {
-    Colors: colors,
-    Spacing: spacing,
-    Typography: typography,
-    Shadows: shadows,
+    colors,
     mode,
     toggleTheme,
   };

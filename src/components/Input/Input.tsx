@@ -7,7 +7,7 @@ import {
   TextInputProps,
   ViewStyle,
 } from 'react-native';
-import {LightColors} from '../../theme/colors';
+import {useTheme} from '../../hooks/useTheme';
 import {Spacing} from '../../theme/spacing';
 import {Typography} from '../../theme/typography';
 
@@ -24,19 +24,46 @@ export const Input: React.FC<InputProps> = ({
   style,
   ...props
 }) => {
+  const {colors} = useTheme();
+  
+  const dynamicStyles = {
+    label: {
+      ...Typography.body,
+      color: colors.textPrimary,
+      marginBottom: Spacing.xs,
+    },
+    input: {
+      borderWidth: 1,
+      borderColor: colors.textSecondary,
+      borderRadius: 8,
+      paddingHorizontal: Spacing.md,
+      paddingVertical: Spacing.sm,
+      ...Typography.body,
+      color: colors.textPrimary,
+    },
+    inputError: {
+      borderColor: colors.error,
+    },
+    error: {
+      ...Typography.caption,
+      color: colors.error,
+      marginTop: Spacing.xs,
+    },
+  };
+  
   return (
     <View style={[styles.container, containerStyle]}>
-      {label && <Text style={styles.label}>{label}</Text>}
+      {label && <Text style={dynamicStyles.label}>{label}</Text>}
       <TextInput
         style={[
-          styles.input,
-          error && styles.inputError,
+          dynamicStyles.input,
+          error && dynamicStyles.inputError,
           style,
         ]}
-        placeholderTextColor={LightColors.textSecondary}
+        placeholderTextColor={colors.textSecondary}
         {...props}
       />
-      {error && <Text style={styles.error}>{error}</Text>}
+      {error && <Text style={dynamicStyles.error}>{error}</Text>}
     </View>
   );
 };
@@ -44,27 +71,5 @@ export const Input: React.FC<InputProps> = ({
 const styles = StyleSheet.create({
   container: {
     marginBottom: Spacing.md,
-  },
-  label: {
-    ...Typography.body,
-    color: LightColors.textPrimary,
-    marginBottom: Spacing.xs,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: LightColors.textSecondary,
-    borderRadius: 8,
-    paddingHorizontal: Spacing.md,
-    paddingVertical: Spacing.sm,
-    ...Typography.body,
-    color: LightColors.textPrimary,
-  },
-  inputError: {
-    borderColor: LightColors.error,
-  },
-  error: {
-    ...Typography.caption,
-    color: LightColors.error,
-    marginTop: Spacing.xs,
   },
 });

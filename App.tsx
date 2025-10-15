@@ -2,7 +2,7 @@ import React from 'react';
 import { SafeAreaView, StatusBar, StyleSheet } from 'react-native';
 import { ThemeProvider, useThemeContext } from './src/context/ThemeContext'
 import { DemoScreen } from './src/screens/DemoScreen'
-
+import { LoginScreen } from './src/screens';
 const AppContent: React.FC = () => {
   const { colors, mode } = useThemeContext();
   
@@ -12,7 +12,7 @@ const AppContent: React.FC = () => {
         barStyle={mode === 'light' ? 'dark-content' : 'light-content'}
         backgroundColor={colors.background}
       />
-      <DemoScreen />
+      <LoginScreen />
     </SafeAreaView>
   );
 };

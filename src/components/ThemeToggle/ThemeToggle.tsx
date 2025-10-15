@@ -1,19 +1,16 @@
 import React from 'react';
 import {TouchableOpacity, Text, StyleSheet} from 'react-native';
-import {LightColors} from '../../theme/colors';
+import {useTheme} from '../../hooks/useTheme';
 
 export const ThemeToggle: React.FC = () => {
-  const handlePress = () => {
-    // Theme toggle functionality will be added later
-    console.log('Theme toggle pressed');
-  };
+  const {colors, mode, toggleTheme} = useTheme();
 
   return (
     <TouchableOpacity
-      style={[styles.container, {backgroundColor: LightColors.surface}]}
-      onPress={handlePress}>
-      <Text style={[styles.text, {color: LightColors.textPrimary}]}>
-        🌙 Dark Mode
+      style={[styles.container, {backgroundColor: colors.surface}]}
+      onPress={toggleTheme}>
+      <Text style={[styles.text, {color: colors.textPrimary}]}>
+        {mode === 'light' ? '🌙' : '☀️'} {mode === 'light' ? 'Dark' : 'Light'}
       </Text>
     </TouchableOpacity>
   );

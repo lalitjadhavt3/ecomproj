@@ -1,17 +1,11 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 import { LightColors, DarkColors, ColorScheme } from '../theme/colors';
-import { Spacing } from '../theme/spacing';
-import { Typography } from '../theme/typography';
-import { Shadows } from '../theme/shadows';
 
 type ThemeMode = 'light' | 'dark';
 
 interface ThemeContextType {
   mode: ThemeMode;
   colors: ColorScheme;
-  spacing: typeof Spacing;
-  typography: typeof Typography;
-  shadows: typeof Shadows;
   toggleTheme: () => void;
 }
 
@@ -33,9 +27,6 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   const value: ThemeContextType = {
     mode,
     colors,
-    spacing: Spacing,
-    typography: Typography,
-    shadows: Shadows,
     toggleTheme,
   };
 

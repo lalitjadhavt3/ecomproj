@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text, StyleSheet, ViewStyle} from 'react-native';
-import {LightColors} from '../../theme/colors';
+import {useTheme} from '../../hooks/useTheme';
 import {Spacing} from '../../theme/spacing';
 import {Typography} from '../../theme/typography';
 
@@ -17,11 +17,12 @@ export const Badge: React.FC<BadgeProps> = ({
   variant = 'primary',
   style,
 }) => {
-  const backgroundColor = LightColors[variant];
+  const {colors} = useTheme();
+  const backgroundColor = colors[variant];
 
   return (
     <View style={[styles.badge, {backgroundColor}, style]}>
-      <Text style={styles.text}>{text}</Text>
+      <Text style={[styles.text, {color: colors.background}]}>{text}</Text>
     </View>
   );
 };
@@ -35,7 +36,6 @@ const styles = StyleSheet.create({
   },
   text: {
     ...Typography.caption,
-    color: LightColors.background,
     fontWeight: '600',
   },
 });

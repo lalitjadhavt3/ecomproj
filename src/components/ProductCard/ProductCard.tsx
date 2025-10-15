@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
+import {useTheme} from '../../hooks/useTheme';
 import {Spacing, Typography, Shadows} from '../../theme';
-import {LightColors} from '../../theme/colors';
 import {formatCurrency} from '../../utils/helpers';
 import {wp} from '../../utils/responsive';
 
@@ -24,46 +24,103 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   onPress,
   onAddToCart,
 }) => {
+  const {colors} = useTheme();
   const discountedPrice = discount ? price - (price * discount) / 100 : price;
+
+  const dynamicStyles = {
+    container: {
+      width: wp(45),
+      backgroundColor: colors.background,
+      borderRadius: 12,
+      marginBottom: Spacing.md,
+      ...Shadows.card,
+    },
+    placeholder: {
+      width: '100%' as const,
+      height: '100%' as const,
+      backgroundColor: colors.surface,
+    },
+    discountBadge: {
+      position: 'absolute' as const,
+      top: Spacing.sm,
+      right: Spacing.sm,
+      backgroundColor: colors.error,
+      paddingHorizontal: Spacing.xs,
+      paddingVertical: 2,
+      borderRadius: 4,
+    },
+    discountText: {
+      ...Typography.caption,
+      color: colors.background,
+      fontWeight: '600' as const,
+    },
+    name: {
+      ...Typography.body,
+      color: colors.textPrimary,
+      marginBottom: Spacing.xs,
+    },
+    price: {
+      ...Typography.body,
+      color: colors.primary,
+      fontWeight: '600' as const,
+    },
+    originalPrice: {
+      ...Typography.caption,
+      color: colors.textSecondary,
+      textDecorationLine: 'line-through' as const,
+      marginLeft: Spacing.xs,
+    },
+    addButton: {
+      backgroundColor: colors.primary,
+      paddingVertical: Spacing.xs,
+      borderRadius: 6,
+      alignItems: 'center' as const,
+    },
+    addButtonText: {
+      ...Typography.caption,
+      color: colors.background,
+      fontWeight: '600' as const,
+    },
+  };
 
   return (
     <TouchableOpacity
-      style={styles.container}
+      style={dynamicStyles.container}
       onPress={() => onPress?.(id)}
       activeOpacity={0.8}>
       <View style={styles.imageContainer}>
         {image ? (
           <Image source={{uri: image}} style={styles.image} />
         ) : (
-          <View style={styles.placeholder} />
+          <View style={dynamicStyles.placeholder} />
         )}
         {discount && (
-          <View style={styles.discountBadge}>
-            <Text style={styles.discountText}>{discount}% OFF</Text>
+          <View style={dynamicStyles.discountBadge}>
+            <Text style={dynamicStyles.discountText}>{discount}% OFF</Text>
           </View>
         )}
       </View>
       
       <View style={styles.content}>
-        <Text style={styles.name} numberOfLines={2}>
+        <Text style={dynamicStyles.name} numberOfLines={2}>
           {name}
         </Text>
         
         <View style={styles.priceContainer}>
-          <Text style={styles.price}>
+          <Text style={dynamicStyles.price}>
             {formatCurrency(discountedPrice)}
           </Text>
           {discount && (
-            <Text style={styles.originalPrice}>
+            <Text style={dynamicStyles.originalPrice}>
               {formatCurrency(price)}
             </Text>
           )}
         </View>
         
         <TouchableOpacity
-          style={styles.addButton}
+          style={dynamicStyles.addButton}
           onPress={() => onAddToCart?.(id)}>
-          <Text style={styles.addButtonText}>Add to Cart</Text>
+          <Text style={dynamicStyles.addButtonText}>Add to Cart</Text>
         </TouchableOpacity>
       </View>
     </TouchableOpacity>
@@ -71,13 +128,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 };
 
 const styles = StyleSheet.create({
-  container: {
-    width: wp(45),
-    backgroundColor: LightColors.background,
-    borderRadius: 12,
-    marginBottom: Spacing.md,
-    ...Shadows.card,
-  },
   imageContainer: {
     position: 'relative',
     height: wp(40),
@@ -90,58 +140,12 @@ const styles = StyleSheet.create({
     height: '100%',
     resizeMode: 'cover',
   },
-  placeholder: {
-    width: '100%',
-    height: '100%',
-    backgroundColor: LightColors.surface,
-  },
-  discountBadge: {
-    position: 'absolute',
-    top: Spacing.sm,
-    right: Spacing.sm,
-    backgroundColor: LightColors.error,
-    paddingHorizontal: Spacing.xs,
-    paddingVertical: 2,
-    borderRadius: 4,
-  },
-  discountText: {
-    ...Typography.caption,
-    color: LightColors.background,
-    fontWeight: '600',
-  },
   content: {
     padding: Spacing.sm,
-  },
-  name: {
-    ...Typography.body,
-    color: LightColors.textPrimary,
-    marginBottom: Spacing.xs,
   },
   priceContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: Spacing.sm,
-  },
-  price: {
-    ...Typography.body,
-    color: LightColors.primary,
-    fontWeight: '600',
-  },
-  originalPrice: {
-    ...Typography.caption,
-    color: LightColors.textSecondary,
-    textDecorationLine: 'line-through',
-    marginLeft: Spacing.xs,
-  },
-  addButton: {
-    backgroundColor: LightColors.primary,
-    paddingVertical: Spacing.xs,
-    borderRadius: 6,
-    alignItems: 'center',
-  },
-  addButtonText: {
-    ...Typography.caption,
-    color: LightColors.background,
-    fontWeight: '600',
   },
 });

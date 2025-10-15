@@ -1,17 +1,27 @@
 import React from 'react';
 import { SafeAreaView, StatusBar, StyleSheet } from 'react-native';
-import { DemoScreen } from './screens/DemoScreen';
-import { LightColors } from './theme/colors';
+import { ThemeProvider, useThemeContext } from './context/ThemeContext';
+import { LoginScreen } from './screens/LoginScreen';
+
+const AppContent: React.FC = () => {
+  const { colors, mode } = useThemeContext();
+  
+  return (
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+      <StatusBar
+        barStyle={mode === 'light' ? 'dark-content' : 'light-content'}
+        backgroundColor={colors.background}
+      />
+      <LoginScreen />
+    </SafeAreaView>
+  );
+};
 
 const App: React.FC = () => {
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: LightColors.background }]}>
-      <StatusBar
-        barStyle="dark-content"
-        backgroundColor={LightColors.background}
-      />
-      <DemoScreen />
-    </SafeAreaView>
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
   );
 };
 

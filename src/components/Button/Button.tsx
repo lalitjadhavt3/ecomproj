@@ -6,7 +6,7 @@ import {
   ViewStyle,
   TextStyle,
 } from 'react-native';
-import {LightColors} from '../../theme/colors';
+import {useTheme} from '../../hooks/useTheme';
 import {Spacing} from '../../theme/spacing';
 import {Typography} from '../../theme/typography';
 
@@ -25,15 +25,17 @@ export const Button: React.FC<ButtonProps> = ({
   style,
   textStyle,
 }) => {
+  const {colors} = useTheme();
+  
   const backgroundColor =
     variant === 'primary'
-      ? LightColors.primary
+      ? colors.primary
       : variant === 'secondary'
-      ? LightColors.secondary
+      ? colors.secondary
       : 'transparent';
   
-  const borderColor = variant === 'outline' ? LightColors.primary : 'transparent';
-  const textColor = variant === 'outline' ? LightColors.primary : LightColors.background;
+  const borderColor = variant === 'outline' ? colors.primary : 'transparent';
+  const textColor = variant === 'outline' ? colors.primary : colors.background;
 
   return (
     <TouchableOpacity
