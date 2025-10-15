@@ -1,26 +1,39 @@
 import React from 'react';
-import { SafeAreaView, StatusBar, StyleSheet } from 'react-native';
-import { ThemeProvider, useThemeContext } from './src/context/ThemeContext'
-import { DemoScreen } from './src/screens/DemoScreen'
-import { LoginScreen } from './src/screens';
+import {StatusBar, View, StyleSheet} from 'react-native';
+import {ThemeProvider} from './src/context/ThemeContext';
+import {AuthProvider, useAuth} from './src/context/AuthContext';
+import {LoginScreen} from './src/screens';
+import {Typography, MainContainer} from './src/components';
+import {useTheme} from './src/hooks/useTheme';
+
 const AppContent: React.FC = () => {
-  const { colors, mode } = useThemeContext();
-  
+  const {isAuthenticated, loading} = useAuth();
+  const {colors} = useTheme();
+
+  if (loading) {
+    return (
+      <View style={[styles.loadingContainer, {backgroundColor: colors.background}]}>
+        <Typography variant="h2" color={colors.textPrimary}>
+          Loading...
+        </Typography>
+      </View>
+    );
+  }
+
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
-      <StatusBar
-        barStyle={mode === 'light' ? 'dark-content' : 'light-content'}
-        backgroundColor={colors.background}
-      />
-      <LoginScreen />
-    </SafeAreaView>
+    <View style={[styles.container, {backgroundColor: colors.background}]}>
+      <StatusBar barStyle="default" />
+      {isAuthenticated ? <MainContainer /> : <LoginScreen />}
+    </View>
   );
 };
 
 const App: React.FC = () => {
   return (
     <ThemeProvider>
-      <AppContent />
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
     </ThemeProvider>
   );
 };
@@ -28,6 +41,11 @@ const App: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

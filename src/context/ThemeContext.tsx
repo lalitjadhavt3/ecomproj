@@ -1,5 +1,6 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { LightColors, DarkColors, ColorScheme } from '../theme/colors';
+import React, {createContext, useContext, useState, useEffect, ReactNode} from 'react';
+import {LightColors, DarkColors, ColorScheme} from '../theme/colors';
+import {getThemeMode, saveThemeMode} from '../utils/storage';
 
 type ThemeMode = 'light' | 'dark';
 
@@ -15,11 +16,32 @@ interface ThemeProviderProps {
   children: ReactNode;
 }
 
-export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
+export const ThemeProvider: React.FC<ThemeProviderProps> = ({children}) => {
   const [mode, setMode] = useState<ThemeMode>('light');
 
-  const toggleTheme = () => {
-    setMode(prevMode => (prevMode === 'light' ? 'dark' : 'light'));
+  useEffect(() => {
+    loadThemeMode();
+  }, []);
+
+  const loadThemeMode = async () => {
+    try {
+      const savedMode = await getThemeMode();
+      if (savedMode) {
+        setMode(savedMode);
+      }
+    } catch (error) {
+      console.error('Error loading theme mode:', error);
+    }
+  };
+
+  const toggleTheme = async () => {
+    const newMode = mode === 'light' ? 'dark' : 'light';
+    setMode(newMode);
+    try {
+      await saveThemeMode(newMode);
+    } catch (error) {
+      console.error('Error saving theme mode:', error);
+    }
   };
 
   const colors = mode === 'light' ? LightColors : DarkColors;

@@ -5,3 +5,6 @@ export * from './ProductCard/ProductCard';
 export * from './Typography';
 export * from './Badge/Badge';
 export * from './ThemeToggle/ThemeToggle';
+export * from './LoginInstructions/LoginInstructions';
+export * from './BottomTabs/BottomTabs';
+export * from './MainContainer/MainContainer';
