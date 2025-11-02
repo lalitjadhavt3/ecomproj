@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, StyleSheet, ScrollView, TouchableOpacity} from 'react-native';
-import {Typography, Card, ThemeToggle} from '../components';
+import {Typography, Card, ThemeToggle, SafeArea} from '../components';
 import {useTheme} from '../hooks/useTheme';
 import {wp, hp} from '../utils/responsive';
 import {Spacing} from '../theme';
@@ -18,7 +18,8 @@ export const CategoriesScreen: React.FC = () => {
   const {colors} = useTheme();
 
   return (
-    <ScrollView style={[styles.container, {backgroundColor: colors.background}]}>
+    <SafeArea style={{backgroundColor: colors.background}}>
+      <ScrollView style={[styles.container, {backgroundColor: colors.background}]}>
       <View style={styles.header}>
         <Typography variant="h1" color={colors.textPrimary}>
           Categories
@@ -46,7 +47,8 @@ export const CategoriesScreen: React.FC = () => {
           </TouchableOpacity>
         ))}
       </View>
-    </ScrollView>
+      </ScrollView>
+    </SafeArea>
   );
 };
 

@@ -4,6 +4,8 @@ import {
   View,
   StyleSheet,
   Alert,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import {
   Button,
@@ -13,6 +15,7 @@ import {
   Typography,
   Badge,
   ThemeToggle,
+  SafeArea,
 } from '../components';
 import { useTheme } from '../hooks/useTheme';
 import { useResponsive } from '../hooks/useResponsive';
@@ -49,9 +52,14 @@ export const DemoScreen: React.FC = () => {
   };
 
   return (
-    <ScrollView
-      style={[styles.container, { backgroundColor: Colors.background }]}
-      showsVerticalScrollIndicator={false}>
+    <SafeArea style={{backgroundColor: Colors.background}}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.keyboardAvoid}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}>
+        <ScrollView
+          style={[styles.container, { backgroundColor: Colors.background }]}
+          showsVerticalScrollIndicator={false}>
 
       {/* Header */}
       <View style={styles.header}>
@@ -225,12 +233,17 @@ export const DemoScreen: React.FC = () => {
           🎉 All components working with Poppins font!
         </Typography>
       </View>
-    </ScrollView>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </SafeArea>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+  },
+  keyboardAvoid: {
     flex: 1,
   },
   header: {

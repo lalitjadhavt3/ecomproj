@@ -8,3 +8,4 @@ export * from './ThemeToggle/ThemeToggle';
 export * from './LoginInstructions/LoginInstructions';
 export * from './BottomTabs/BottomTabs';
 export * from './MainContainer/MainContainer';
+export * from './SafeArea/SafeArea';

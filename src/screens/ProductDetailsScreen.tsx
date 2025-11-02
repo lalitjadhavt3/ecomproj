@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, StyleSheet, ScrollView} from 'react-native';
-import {Typography, Card, Button} from '../components';
+import {Typography, Card, Button, SafeArea} from '../components';
 import {useTheme} from '../hooks/useTheme';
 import {wp, hp} from '../utils/responsive';
 
@@ -8,7 +8,8 @@ export const ProductDetailsScreen: React.FC = () => {
   const {colors} = useTheme();
 
   return (
-    <ScrollView style={[styles.container, {backgroundColor: colors.background}]}>
+    <SafeArea style={{backgroundColor: colors.background}}>
+      <ScrollView style={[styles.container, {backgroundColor: colors.background}]}>
       <View style={styles.header}>
         <Typography variant="h1" color={colors.textPrimary}>
           Product Details
@@ -30,7 +31,8 @@ export const ProductDetailsScreen: React.FC = () => {
           style={styles.addToCartButton}
         />
       </Card>
-    </ScrollView>
+      </ScrollView>
+    </SafeArea>
   );
 };
 

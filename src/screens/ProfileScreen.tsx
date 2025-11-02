@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, StyleSheet, ScrollView, Alert} from 'react-native';
-import {Typography, Card, Button} from '../components';
+import {Typography, Card, Button, SafeArea} from '../components';
 import {useTheme} from '../hooks/useTheme';
 import {useAuth} from '../context/AuthContext';
 import {wp, hp} from '../utils/responsive';
@@ -34,7 +34,8 @@ export const ProfileScreen: React.FC = () => {
   };
 
   return (
-    <ScrollView style={[styles.container, {backgroundColor: colors.background}]}>
+    <SafeArea style={{backgroundColor: colors.background}}>
+      <ScrollView style={[styles.container, {backgroundColor: colors.background}]}>
       <View style={styles.header}>
         <Typography variant="h1" color={colors.textPrimary}>
           Profile
@@ -62,7 +63,8 @@ export const ProfileScreen: React.FC = () => {
           style={styles.logoutButton}
         />
       </Card>
-    </ScrollView>
+      </ScrollView>
+    </SafeArea>
   );
 };
 

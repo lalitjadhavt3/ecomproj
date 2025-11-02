@@ -1,6 +1,20 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, ScrollView, TouchableOpacity} from 'react-native';
-import {Typography, Card, Input, ThemeToggle, ProductCard} from '../components';
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
+} from 'react-native';
+import {
+  Typography,
+  Card,
+  Input,
+  ThemeToggle,
+  ProductCard,
+  SafeArea,
+} from '../components';
 import {useTheme} from '../hooks/useTheme';
 import {wp, hp} from '../utils/responsive';
 import {Spacing} from '../theme';
@@ -27,7 +41,12 @@ export const SearchScreen: React.FC = () => {
   };
 
   return (
-    <ScrollView style={[styles.container, {backgroundColor: colors.background}]}>
+    <SafeArea style={{backgroundColor: colors.background}}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.keyboardAvoid}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}>
+        <ScrollView style={[styles.container, {backgroundColor: colors.background}]}>
       <View style={styles.header}>
         <Typography variant="h1" color={colors.textPrimary}>
           Search
@@ -81,12 +100,17 @@ export const SearchScreen: React.FC = () => {
           </View>
         </View>
       )}
-    </ScrollView>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </SafeArea>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+  },
+  keyboardAvoid: {
     flex: 1,
   },
   header: {

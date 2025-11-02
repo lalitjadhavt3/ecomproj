@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, StyleSheet, ScrollView} from 'react-native';
-import {Typography, Card} from '../components';
+import {Typography, Card, SafeArea} from '../components';
 import {useTheme} from '../hooks/useTheme';
 import {wp, hp} from '../utils/responsive';
 
@@ -8,7 +8,8 @@ export const OrdersScreen: React.FC = () => {
   const {colors} = useTheme();
 
   return (
-    <ScrollView style={[styles.container, {backgroundColor: colors.background}]}>
+    <SafeArea style={{backgroundColor: colors.background}}>
+      <ScrollView style={[styles.container, {backgroundColor: colors.background}]}>
       <View style={styles.header}>
         <Typography variant="h1" color={colors.textPrimary}>
           My Orders
@@ -23,7 +24,8 @@ export const OrdersScreen: React.FC = () => {
           Past orders, order tracking, and order details.
         </Typography>
       </Card>
-    </ScrollView>
+      </ScrollView>
+    </SafeArea>
   );
 };
 

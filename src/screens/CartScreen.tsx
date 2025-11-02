@@ -7,7 +7,7 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import { Typography, Card, Button } from '../components';
+import { Typography, Card, Button, SafeArea } from '../components';
 import { useTheme } from '../hooks/useTheme';
 import { wp, hp } from '../utils/responsive';
 const intialData = {
@@ -75,7 +75,8 @@ export const CartScreen: React.FC = () => {
     setData({ ...data, items: updated });
   };
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
+    <SafeArea style={{backgroundColor: colors.background}}>
+      <View style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={styles.header}>
         <Typography variant="h1" color={colors.textPrimary}>
           Shopping Cart
@@ -168,7 +169,8 @@ export const CartScreen: React.FC = () => {
         variant="primary"
         style={styles.checkoutButton}
       />
-    </View>
+      </View>
+    </SafeArea>
   );
 };
 
@@ -223,7 +225,6 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    paddingTop: StatusBar.currentHeight,
     paddingBottom: hp(7),
   },
   header: {

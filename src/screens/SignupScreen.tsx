@@ -5,12 +5,15 @@ import {
   StyleSheet,
   TouchableOpacity,
   Alert,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import {
   Button,
   Input,
   Typography,
   ThemeToggle,
+  SafeArea,
 } from '../components';
 import {useTheme} from '../hooks/useTheme';
 import {useAuth} from '../context/AuthContext';
@@ -70,10 +73,15 @@ export const SignupScreen: React.FC = () => {
   };
 
   return (
-    <ScrollView 
-      style={[styles.container, {backgroundColor: colors.background}]}
-      contentContainerStyle={styles.contentContainer}
-      showsVerticalScrollIndicator={false}>
+    <SafeArea style={{backgroundColor: colors.background}}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.keyboardAvoid}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}>
+        <ScrollView 
+          style={[styles.container, {backgroundColor: colors.background}]}
+          contentContainerStyle={styles.contentContainer}
+          showsVerticalScrollIndicator={false}>
       
       {/* Theme Toggle */}
       <View style={styles.themeToggleContainer}>
@@ -182,12 +190,17 @@ export const SignupScreen: React.FC = () => {
           </Typography>
         </TouchableOpacity>
       </View>
-    </ScrollView>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </SafeArea>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+  },
+  keyboardAvoid: {
     flex: 1,
   },
   contentContainer: {
