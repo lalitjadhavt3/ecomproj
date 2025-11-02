@@ -14,6 +14,7 @@ export type MainTabParamList = {
   SearchTab: NavigatorScreenParams<SearchStackParamList>;
   CartTab: NavigatorScreenParams<CartStackParamList>;
   ProfileTab: NavigatorScreenParams<ProfileStackParamList>;
+  TailwindDemoTab: undefined;
 };
 
 // Home Stack Navigator

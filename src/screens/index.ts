@@ -1,4 +1,5 @@
 export * from './DemoScreen';
+export * from './TailwindDemoScreen';
 export * from './LoginScreen';
 export * from './SignupScreen';
 export * from './HomeScreen';
